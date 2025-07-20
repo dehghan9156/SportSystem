@@ -11,8 +11,12 @@ from rest_framework.views import APIView
 from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from rest_framework.generics import CreateAPIView,GenericAPIView
+from .serialization import *
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
-class TestView(APIView):
-    def get(self,request):
-        return Response({"message":"okkkkkkkkkkkkkkkkkk"})
+
+class UserRegisterApiView(APIView):
+    pass 
