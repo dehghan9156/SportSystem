@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_DB : sportsystem
+      POSTGRES_USER : postgres
+      POSTGRES_PASSWORD : test123
+    networks:
+      - main
+    ports:
+      - "5432:5432"
+    restart : always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data   
+  
+  web:
+    build: .
+    command: sh -c "python3 manage.py migrate && gunicorn sportsystem.wsgi -b 0.0.0.0:8000"
+    container_name: web
+    volumes:
+      - .:/code/
+    expose:
+      - 8000
+    ports:
+      - "8000:8000"
+    networks:
+      - main
+    depends_on:
+      - postgres
+    restart: always
+
+networks:
+  main:
+volumes:
+  postgres_data:
+  .:
