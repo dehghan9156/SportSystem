@@ -6,5 +6,5 @@ from django.conf.urls.static import static
 app_name = 'race'
 
 urlpatterns = [
-    path('api/v1/',include('race.api.v1.urls',namespace='api-v1'),),
+    path('api/v1/',include('race.api.v1.urls',namespace='api-v1')),
 ]

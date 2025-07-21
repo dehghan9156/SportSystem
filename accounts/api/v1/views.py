@@ -43,7 +43,8 @@ class UserLoginApiView(generics.GenericAPIView):
                 return Response({
                     'refresh': str(refresh),
                     'access': str(refresh.access_token),
-                    'username':user.username
+                    'username':user.username,
+                    'role':user.role,
                 })
             return Response({"message":"username or password not correct"})
         return Response(serializer.errors)
