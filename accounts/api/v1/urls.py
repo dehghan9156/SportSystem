@@ -6,4 +6,5 @@ app_name="api-v1"
 
 urlpatterns = [
     path("user/register/",views.UserRegisterApiView.as_view(),name="user-register"),
+    path("user/login/",views.UserLoginApiView.as_view(),name="user-login"),
 ]

@@ -13,7 +13,8 @@ from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from rest_framework.generics import CreateAPIView,GenericAPIView
 from .serialization import *
 from .permissions import *
-
+from django.contrib.auth import authenticate
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 from django.contrib.auth import get_user_model
@@ -27,5 +28,22 @@ class UserRegisterApiView(generics.GenericAPIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({"message":"user register successfully"},status=status.HTTP_200_OK)
+            username = serializer.validated_data["username"]
+            return Response({"message":f"{username} register successfully"},status=status.HTTP_200_OK)
+        return Response(serializer.errors)
+
+class UserLoginApiView(generics.GenericAPIView):
+    serializer_class=UserLoginSerializer
+    def post(self,request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            user = authenticate(request,username=serializer.validated_data["username"],password=serializer.validated_data["password"])
+            if user:
+                refresh = RefreshToken.for_user(user)
+                return Response({
+                    'refresh': str(refresh),
+                    'access': str(refresh.access_token),
+                    'username':user.username
+                })
+            return Response({"message":"username or password not correct"})
         return Response(serializer.errors)
