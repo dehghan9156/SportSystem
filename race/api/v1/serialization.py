@@ -6,3 +6,7 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ["name"]
         
+class RaceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Race
+        fields = ["title","start_date","end_date","longitude","latitude","category"]
