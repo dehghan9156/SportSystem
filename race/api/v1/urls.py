@@ -12,5 +12,7 @@ router.register(r'category', views.CategoryApiViewSet, basename='admin-category'
 router.register(r'race', views.RaceApiViewSet,basename="admin-race")
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('manager/',views.ManagerRaceListCreateApiView.as_view(),name='manager-race'),
+    path('manager/<int:pk>/',views.ManagerRaceRetrieveUpdateApiView.as_view(),name='manager-race-retrieve'),
 ]

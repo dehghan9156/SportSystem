@@ -14,7 +14,7 @@ from rest_framework.generics import CreateAPIView,GenericAPIView
 from rest_framework import viewsets
 from ...models import *
 from .serialization import *
-
+from accounts.api.v1.permissions import *
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -28,3 +28,21 @@ class RaceApiViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]
     serializer_class = RaceSerializer
     queryset = Race.objects.all()
+
+class ManagerRaceListCreateApiView(generics.ListCreateAPIView):
+    permission_classes = [IsRaceManager]
+    serializer_class = RaceSerializer
+    queryset = Race.objects.all()
+
+    def get_queryset(self):
+        race = Race.objects.filter(race_manager=self.request.user)
+        return race
+
+class ManagerRaceRetrieveUpdateApiView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes =[IsRaceManager]
+    serializer_class = RaceSerializer
+    queryset  = Race.objects.all()
+
+    def get_queryset(self):
+        race = Race.objects.filter(user_manager=self.request.user)
+        return race

@@ -1,17 +1,17 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
-class RaceManagerPermission(BasePermission):
+class IsRaceManager(BasePermission):
     def has_object_permission(self, request, view, obj):
-        if request.user.role in ["admin","race_manager"]:
+        if request.user.is_authenticated and request.user.role in ["admin","race_manager"]:
             return True
         return False
     
     def has_permission(self, request, view):
-        if request.user.role in ["admin","race_manager"]:
+        if request.user.is_authenticated and request.user.role in ["admin","race_manager"]:
             return True
         return False
 
-class DovarPermission(BasePermission):
+class IsDovar(BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.user.role in ["admin","dovar"]:
             return True
@@ -22,7 +22,7 @@ class DovarPermission(BasePermission):
             return True
         return False
     
-class RacerPermission(BasePermission):
+class IsRacer(BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.user.role in ["admin","racer"]:
             return True

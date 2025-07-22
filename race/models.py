@@ -17,7 +17,7 @@ class Race(models.Model):
     longitude = models.DecimalField(max_digits=6, decimal_places=2,blank=True,null=True)
     latitude = models.DecimalField(max_digits=6, decimal_places=2,blank=True,null=True)
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
-    race_manager = models.ForeignKey(User,on_delete=models.CASCADE)
+    race_manager = models.ForeignKey(User,on_delete=models.SET_NULL,blank=True,null=True)
     
     def __str__(self):
         return f"{self.title}-{self.category}"
