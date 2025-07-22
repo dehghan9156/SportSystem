@@ -24,3 +24,7 @@ class CategoryApiViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
 
+class RaceApiViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAdminUser]
+    serializer_class = RaceSerializer
+    queryset = Race.objects.all()

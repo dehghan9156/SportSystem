@@ -8,7 +8,8 @@ from . import views
 app_name="api-v1"
 
 router = DefaultRouter()
-router.register(r'category', views.CategoryApiViewSet, basename='category')
+router.register(r'category', views.CategoryApiViewSet, basename='admin-category')
+router.register(r'race', views.RaceApiViewSet,basename="admin-race")
 
 urlpatterns = [
     path('', include(router.urls))
